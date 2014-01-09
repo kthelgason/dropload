@@ -55,6 +55,12 @@ body {
     border-color: #3F5765;
 }
 
+.drophover {
+    background-color: #CDD9DE;
+    box-shadow: 0px 0px 5px 6px #222222;
+}
+
+
 #info {
     margin-top: 120px;
     color: #FF530D;

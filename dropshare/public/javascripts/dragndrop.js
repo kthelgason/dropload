@@ -1,11 +1,17 @@
 
 var dropbox = document.getElementById("dropbox");
 
+if (window.File && window.FileReader && window.FileList && window.Blob) {
+  // Great success! All the File APIs are supported.
+} else {
+  alert('The File APIs are not fully supported in this browser.');
+}
+
 // event handlers
 
 dropbox.addEventListener("dragenter", noopHandler, false);
-dropbox.addEventListener("dragexit", noopHandler, false);
-dropbox.addEventListener("dragover", noopHandler, false);
+dropbox.addEventListener("dragexit", dragExit, false);
+dropbox.addEventListener("dragover", dragOver, false);
 dropbox.addEventListener("drop", drop, false);
 
 // no-op handler to stop event propagation
@@ -13,6 +19,19 @@ function noopHandler(evt) {
     evt.stopPropagation();
     evt.preventDefault();
 }
+
+function dragOver(evt) {
+    evt.stopPropagation();
+    evt.preventDefault();
+    this.className = "drophover";
+}
+
+function dragExit(evt) {
+    evt.stopPropagation();
+    evt.preventDefault();
+    this.className = "";
+}
+    
 
 function drop(evt){
     evt.stopPropagation();
