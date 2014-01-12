@@ -10,7 +10,7 @@ exports.upload = function(req, res){
     console.log(req.files);
 
     var tempPath = req.files.SelectedFile.path,
-        targetPath = req.files.SelectedFile.name;
+        targetPath = "uploads/" + req.files.SelectedFile.name;
 
     fs.rename(tempPath, targetPath, function(err) {
         if (err){ 
@@ -19,4 +19,15 @@ exports.upload = function(req, res){
         }
         console.log("Upload completed!");
     });
+    res.send(200, targetPath);
+};
+
+/*
+ * GET download uploaded file 
+ */
+
+exports.fetch = function(req, res){
+    var file = req.params.filename;
+    console.log("getting " + file);
+    res.sendfile(file, {root: './uploads'});
 };

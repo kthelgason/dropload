@@ -53,6 +53,8 @@ function handleFiles(files) {
         reader = new FileReader(),
         urlbox = document.getElementById("link");
 
+    var resp;
+
     var data = new FormData();
     data.append('SelectedFile', file);
 
@@ -60,14 +62,15 @@ function handleFiles(files) {
     request.onreadystatechange = function(){
         if(request.readyState == 4){
             try {
-                var resp = JSON.parse(request.response);
+                resp = request.response;
+                urlbox.value = resp;
             } catch (e){
-                var resp = {
+                resp = {
                     status: 'error',
                     data: 'Unknown error occurred: [' + request.responseText + ']'
                 };
             }
-            console.log(resp.status + ': ' + resp.data);
+            console.log(resp);
         }
     };
     /*
@@ -79,7 +82,7 @@ function handleFiles(files) {
     request.open('POST', 'api/upload');
     request.send(data);
 
-    urlbox.value = "Hello bahamas!";
+
 }
 
 function handleReaderLoad(evt) {
