@@ -1,10 +1,8 @@
 
 var dropbox = document.getElementById("dropbox");
 
-if (window.File && window.FileReader && window.FileList && window.Blob) {
+if (!window.File || !window.FileReader || !window.FileList || !window.Blob) {
     // Great success! All the File APIs are supported.
-    console.log("File API's appear to be supported");
-} else {
     alert('The File APIs are not fully supported in this browser.');
 }
 
@@ -85,7 +83,3 @@ function handleFiles(files) {
 
 }
 
-function handleReaderLoad(evt) {
-    var img = document.getElementById("preview");
-    img.src = evt.target.result;
-}
