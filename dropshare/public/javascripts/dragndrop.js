@@ -2,9 +2,10 @@
 var dropbox = document.getElementById("dropbox");
 
 if (window.File && window.FileReader && window.FileList && window.Blob) {
-  // Great success! All the File APIs are supported.
+    // Great success! All the File APIs are supported.
+    console.log("File API's appear to be supported");
 } else {
-  alert('The File APIs are not fully supported in this browser.');
+    alert('The File APIs are not fully supported in this browser.');
 }
 
 // event handlers
@@ -43,17 +44,42 @@ function drop(evt){
     // Only call the handler if 1 or more files was dropped.
     if (count > 0)
         handleFiles(files);
+    
+    this.className = "";
 }
 
 function handleFiles(files) {
-    var file = files[0];
-    var reader = new FileReader();
+    var file = files[0],
+        reader = new FileReader(),
+        urlbox = document.getElementById("link");
 
-    // init reader event handlers
-    reader.onload = handleReaderLoad;
+    var data = new FormData();
+    data.append('SelectedFile', file);
 
-    // read things
-    reader.readAsDataURL(file);
+    var request = new XMLHttpRequest();
+    request.onreadystatechange = function(){
+        if(request.readyState == 4){
+            try {
+                var resp = JSON.parse(request.response);
+            } catch (e){
+                var resp = {
+                    status: 'error',
+                    data: 'Unknown error occurred: [' + request.responseText + ']'
+                };
+            }
+            console.log(resp.status + ': ' + resp.data);
+        }
+    };
+    /*
+     *request.upload.addEventListener('progress', function(e){
+     *    progressBar.style.width = Math.ceil(e.loaded/e.total) * 100 + '%';
+     *}, false);
+     */
+
+    request.open('POST', 'api/upload');
+    request.send(data);
+
+    urlbox.value = "Hello bahamas!";
 }
 
 function handleReaderLoad(evt) {

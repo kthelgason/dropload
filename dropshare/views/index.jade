@@ -10,3 +10,7 @@ block content
   div#info
       h1 link:
       input#link
+
+  div#form
+    form(action="api/upload", method="post", enctype="multipart/form-data")
+      input#data(type="file", name="file")
