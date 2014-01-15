@@ -24,7 +24,7 @@ exports.upload = function(req, res){
         console.log("Upload completed!");
     });
 
-    var fullPath = 'http://dropload.sigsegv.is/api/fetch' + req.files.SelectedFile.name;
+    var fullPath = 'http://dropload.apps.sigsegv.is/api/fetch' + req.files.SelectedFile.name;
     //var fullPath = 'localhost:3000/api/fetch' + req.files.SelectedFile.name;
 
     // Request to bit.ly
