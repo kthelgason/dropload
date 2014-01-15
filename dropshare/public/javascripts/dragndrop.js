@@ -2,7 +2,6 @@
 var dropbox = document.getElementById("dropbox");
 
 if (!window.File || !window.FileReader || !window.FileList || !window.Blob) {
-    // Great success! All the File APIs are supported.
     alert('The File APIs are not fully supported in this browser.');
 }
 

@@ -12,8 +12,6 @@ var path = require('path');
 
 var app = express();
 
-// Globals
-ACCESS_TOKEN = '740afd7dcf2532581a6cf64d654c7f1a5c7e372d';
 
 // all environments
 app.set('port', process.env.PORT || 3000);
