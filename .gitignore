@@ -1,3 +1,5 @@
+.env
+.jshintrc
 .DS_Store
 uploads/
 node_modules

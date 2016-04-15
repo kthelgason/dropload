@@ -1,38 +1,28 @@
+const express = require('express');
+const routes = require('./routes');
+const user = require('./routes/user');
+const api = require('./routes/api');
+const http = require('http');
+const path = require('path');
+const favicon = require('serve-favicon');
+const morgan = require('morgan');
+const bodyParser = require('body-parser');
+const busboy = require('connect-busboy');
+const serveStatic = require('serve-static');
 
-/**
- * Module dependencies.
- */
-
-var express = require('express');
-var routes = require('./routes');
-var user = require('./routes/user');
-var api = require('./routes/api');
-var http = require('http');
-var path = require('path');
-
-var app = express();
-
+const app = express();
 
 // all environments
 app.set('port', process.env.PORT || 3000);
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
-app.use(express.favicon());
-app.use(express.logger('dev'));
-app.use(express.json());
-app.use(express.urlencoded());
-app.use(express.multipart({uploadDir:'./uploads'}));
-app.use(express.methodOverride());
-app.use(express.cookieParser('your secret here'));
-app.use(express.session());
-app.use(app.router);
-app.use(express.static(path.join(__dirname, 'public')));
-app.use(express.static(path.join(__dirname, 'uploads')));
-
-// development only
-if ('development' == app.get('env')) {
-  app.use(express.errorHandler());
-}
+app.use(favicon(__dirname + '/public/favicon.ico'));
+app.use(morgan('combined'));
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(busboy({ immediate: true }));
+app.use(serveStatic(path.join(__dirname, 'public')));
+app.use(serveStatic(path.join(__dirname, 'uploads')));
 
 app.get('/', routes.index);
 app.get('/users', user.list);
